@@ -29,17 +29,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import edu.ucne.jsautoimports.R
+import edu.ucne.jsautoimports.presentation.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBarComponent(
     title: String,
-    onClickMenu: () -> Unit,
-    onClickNotifications: () -> Unit,
+    navController: NavController,
+
     notificationCount: Int
 ) {
     CenterAlignedTopAppBar(
@@ -49,15 +52,16 @@ fun TopBarComponent(
                 contentAlignment = Alignment.Center
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Logo a la izquierda
                     Icon(
-                        painter = painterResource(id = R.drawable.logo_removebg_preview),
+                        painter = painterResource(id = R.drawable.logo_removebg_preview), // Usa tu logo aquí
                         contentDescription = "Logo",
                         modifier = Modifier
                             .size(60.dp)
-                            .padding(end = 14.dp),
-                        tint = Color.Unspecified
+                            .padding(end = 14.dp), // Espacio entre el ícono y el texto
+                        tint = Color.Unspecified // No tintar el logo
                     )
-
+                    // Título centrado
                     Text(
                         text = title,
                         color = Color.White,
@@ -68,19 +72,26 @@ fun TopBarComponent(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color(0xFF1A73E8)
+            containerColor = Color(0xFF1A73E8) // Color de fondo de la barra
         ),
         navigationIcon = {
-            IconButton(onClick = onClickMenu) {
+            IconButton(onClick = {
+                // Navegar hacia atrás en la pila de navegación
+                navController.popBackStack()
+            }) {
                 Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Abrir el Menú",
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Atrás",
                     tint = Color.Black
                 )
             }
         },
+
         actions = {
-            IconButton(onClick = onClickNotifications) {
+            IconButton(onClick = {
+                // Aquí navegamos a la pantalla del carrito de compras
+                navController.navigate(Screen.CarritoScreen) // Suponiendo que "carritoCompraScreen" es la ruta configurada en tu NavHost
+            }) {
                 BadgedBox(
                     badge = {
                         if (notificationCount > 0) {
@@ -91,57 +102,14 @@ fun TopBarComponent(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Notifications,
-                        contentDescription = "Notificaciones",
+                        imageVector = Icons.Filled.ShoppingCart, // Ícono de carrito de compras
+                        contentDescription = "Carrito de Compra", // Descripción para accesibilidad
                         tint = Color.Black
                     )
                 }
             }
+
         }
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SimpleTopBarComponent(
-    title: String,
-    onBackClick: () -> Unit
-) {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = title,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.displaySmall,
-                fontWeight = FontWeight.Bold,
-                color = Color.White
-            )
-        },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color(0xFFFFA500)
-        ),
-        navigationIcon = {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Volver",
-                    tint = Color.Black
-                )
-            }
-        }
-    )
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun TopBarComponentPreview() {
-    var notificationCount by remember { mutableStateOf(5) }
-
-    TopBarComponent(
-        title = "Crear Pieza",
-        onClickMenu = {},
-        onClickNotifications = {},
-        notificationCount = notificationCount
-    )
-}

@@ -1,5 +1,10 @@
-package edu.ucne.jsautoimports.presentation.carrito
+package edu.ucne.jsautopartsprueba.presentation.carrito
 
+import android.graphics.BitmapFactory
+import android.util.Base64
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,11 +14,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -40,8 +48,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import edu.ucne.jsautoimports.data.local.entities.CarritoDetalleEntity
-import edu.ucne.jsautoimports.presentation.CarritoViewModel
-import edu.ucne.jsautoimports.presentation.navigation.Screen
+import edu.ucne.jsautoimports.presentation.carrito.CarritoUiState
+import edu.ucne.jsautopartsprueba.presentation.CarritoViewModel
 import edu.ucne.proyectofinalaplicada2.presentation.components.TopBarComponent
 import kotlinx.coroutines.launch
 
@@ -52,7 +60,7 @@ fun CartScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
-    val selectedTab = "Carrito"
+    val selectedTab = "Carrito" // Establecer "Carrito" como la pestaña seleccionada por defecto
 
     CartBodyScreen(
         uiState = uiState,
@@ -70,37 +78,40 @@ fun CartScreen(
 private fun CartBodyScreen(
     uiState: CarritoUiState,
     navController: NavController,
-    selectedTab: String,
+    selectedTab: String,  // Recibir el estado de la pestaña seleccionada
     onCartEvent: (CarritoUiEvent) -> Unit
 ) {
     Scaffold(
         topBar = {
             TopBarComponent(
                 title = "Carrito de Compras",
-                onClickMenu = {},
-                onClickNotifications = {},
+                navController = navController,
                 notificationCount = 0
+
             )
+
+
+
+
+
+
         },
-        bottomBar = {
-            BottomNavigationBar(
-                selectedTab = selectedTab,
-                navController = navController
-            )
-        }
-    ) { paddingValues ->
+
+        ) { paddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+            // Lista de productos
             CartProductList(uiState)
 
+            // Resumen del carrito
             CartSummary(
                 uiState = uiState,
                 onProceedToCheckout = {
-                    onCartEvent(CarritoUiEvent.SaveCarritos)
+                    onCartEvent(CarritoUiEvent.Save)
                     navController.popBackStack()
                 }
             )
@@ -112,6 +123,7 @@ private fun CartBodyScreen(
 fun CartProductList(uiState: CarritoUiState) {
     Column(modifier = Modifier.padding(10.dp)) {
         if (uiState.carritoDetalle.isEmpty()) {
+            // Carrito vacío
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -131,6 +143,7 @@ fun CartProductList(uiState: CarritoUiState) {
                 )
             }
         } else {
+            // Lista de productos
             LazyColumn {
                 items(uiState.carritoDetalle) { item ->
                     CartRow(
@@ -252,33 +265,4 @@ fun CartSummary(uiState: CarritoUiState, onProceedToCheckout: () -> Unit) {
     }
 }
 
-@Composable
-fun BottomNavigationBar(
-    selectedTab: String,
-    navController: NavController
-) {
-    NavigationBar(
-        containerColor = Color.White,
-        tonalElevation = 4.dp
-    ) {
 
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.List, contentDescription = "Categories") },
-            label = { Text("Categories") },
-            selected = selectedTab == "Categories",
-            onClick = { navController.navigate(Screen.CategoriaListScreen) }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Carrito") },
-            label = { Text("Carrito") },
-            selected = selectedTab == "Carrito",
-            onClick = { navController.navigate(Screen.CarritoScreen) }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Default.Person, contentDescription = "Account") },
-            label = { Text("Account") },
-            selected = selectedTab == "Account",
-            onClick = { navController.navigate(Screen.ProfileScreen) }
-        )
-    }
-}

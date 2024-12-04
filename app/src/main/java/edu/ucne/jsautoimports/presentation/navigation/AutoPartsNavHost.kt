@@ -7,14 +7,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import edu.ucne.jsautoimports.presentation.carrito.CartScreen
-import edu.ucne.jsautoimports.presentation.categoria.CategoriaListScreen
 import edu.ucne.jsautoimports.presentation.login.AuthViewModel
 import edu.ucne.jsautoimports.presentation.login.LoginPage
 import edu.ucne.jsautoimports.presentation.login.SignUpPage
 import edu.ucne.jsautoimports.presentation.others.ProfileScreen
-import edu.ucne.jsautoimports.presentation.pago.PagoScreen
-import edu.ucne.jsautoimports.presentation.pieza.PiezasListScreen
+import edu.ucne.jsautopartsprueba.presentation.carrito.CartScreen
+import edu.ucne.jsautopartsprueba.presentation.categoria.CategoriaListScreen
+import edu.ucne.jsautopartsprueba.presentation.pago.PagoScreen
+import edu.ucne.jsautopartsprueba.presentation.pieza.PiezasListScreen
 
 @Composable
 fun AutoPartsNavHost(
@@ -64,8 +64,12 @@ fun AutoPartsNavHost(
 
         composable<Screen.PagoScreen>{
             PagoScreen(
-                onSavePago = { pagoId, pedidoId, tarjetaId, fechaPago, monto ->
-                }
+                navController = navHostController,
+                onSavePago = { pagoId, pedidoId, tarjetaId, fechaPago, nombreTarjeta, numeroTarjeta, mesExpiracion, monto ->
+                },
+                notificationCount = 0,
+                precio = 5000.0,
+                cantidad = 1
             )
         }
 

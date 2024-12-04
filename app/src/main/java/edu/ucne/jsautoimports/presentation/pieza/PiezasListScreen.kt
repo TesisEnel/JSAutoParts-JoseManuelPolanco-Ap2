@@ -1,4 +1,4 @@
-package edu.ucne.jsautoimports.presentation.pieza
+package edu.ucne.jsautopartsprueba.presentation.pieza
 
 import android.graphics.BitmapFactory
 import android.util.Base64
@@ -56,10 +56,11 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import edu.ucne.jsautoimports.data.local.entities.CarritoDetalleEntity
 import edu.ucne.jsautoimports.data.local.entities.PiezaEntity
-import edu.ucne.jsautoimports.presentation.CarritoViewModel
-import edu.ucne.jsautoimports.presentation.carrito.CarritoUiEvent
 import edu.ucne.jsautoimports.presentation.components.SearchBar
 import edu.ucne.jsautoimports.presentation.navigation.Screen
+import edu.ucne.jsautoimports.presentation.pieza.PiezaViewModel
+import edu.ucne.jsautopartsprueba.presentation.CarritoViewModel
+import edu.ucne.jsautopartsprueba.presentation.carrito.CarritoUiEvent
 import edu.ucne.proyectofinalaplicada2.presentation.components.TopBarComponent
 import kotlinx.coroutines.launch
 
@@ -91,10 +92,10 @@ fun PiezasListScreen(
         topBar = {
             TopBarComponent(
                 title = "$nombreCategoria",
-                onClickMenu = {},
-                onClickNotifications = {},
-                notificationCount = 0
-            )
+                navController = navController,
+                notificationCount = 0,
+
+                )
         }
     ) { innerPadding ->
         Column(
@@ -132,29 +133,24 @@ fun PiezasListScreen(
 
                             },
                             onAddToCart = { cantidad ->
-                                coroutineScope.launch {
-                                    val detalle = CarritoDetalleEntity(
-                                        carritoDetalleId = 0,
-                                        carritoId = null,
-                                        piezaId = pieza.piezaId,
-                                        cantidad = cantidad,
-                                        precio = pieza.precio,
-                                        subTotal = pieza.precio * cantidad,
-                                        itbis = (pieza.precio * cantidad) * 0.18
-                                    )
-                                    carritoViewModel.onUiEvent(
-                                        CarritoUiEvent.AgregarPieza(detalle, cantidad)
-                                    )
-                                    navController.navigate(Screen.CarritoScreen)
-                                }
-                            }
-                            ,
-                            onBuyNow = { cantidad ->
-                                coroutineScope.launch {
-                                    snackbarHostState.showSnackbar("Has comprado $cantidad")
-                                }
-                            }
+                                val detalle = CarritoDetalleEntity(
+                                    carritoDetalleId = 0,
+                                    carritoId = null,
+                                    piezaId = pieza.piezaId,
+                                    cantidad = cantidad,
+                                    precio = pieza.precio,
+                                    subTotal = pieza.precio * cantidad,
+                                    itbis = (pieza.precio * cantidad) * 0.18
+                                )
+                                carritoViewModel.onUiEvent(
+                                    event = CarritoUiEvent.AddToCart(detalle)
+                                )
+                                navController.navigate(Screen.CarritoScreen)
+                            },
+                            navController = navController
                         )
+
+
                     }
 
                     item {
@@ -173,7 +169,7 @@ fun ItemPieza(
     item: PiezaEntity,
     goToPieza: (PiezaEntity) -> Unit,
     onAddToCart: (Int) -> Unit, // Cantidad incluida
-    onBuyNow: (Int) -> Unit // Cantidad incluida
+    navController: NavController,
 ) {
     var cantidad by remember { mutableStateOf(1) } // Estado para la cantidad seleccionada
 
@@ -322,7 +318,10 @@ fun ItemPieza(
                 }
 
                 Button(
-                    onClick = { onBuyNow(cantidad) }, // Pasa la cantidad seleccionada
+                    onClick = {
+                        // Navegar a la pantalla de carrito de compras
+                        navController.navigate(Screen.PagoScreen) // Asegúrate de que "carritoDeCompras" es la ruta correcta
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)), // Color distintivo
                     modifier = Modifier
                         .weight(1f) // Ambos botones ocupan el mismo ancho
@@ -340,6 +339,7 @@ fun ItemPieza(
                         style = MaterialTheme.typography.bodySmall.copy(color = Color.White)
                     )
                 }
+
             }
         }
     }

@@ -1,4 +1,4 @@
-package edu.ucne.jsautoimports.presentation.categoria
+package edu.ucne.jsautopartsprueba.presentation.categoria
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,6 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import edu.ucne.jsautoimports.data.remote.Resources
 import edu.ucne.jsautoimports.data.remote.dto.CategoriaDto
 import edu.ucne.jsautoimports.data.repository.CategoriaRepository
+import edu.ucne.jsautoimports.presentation.categoria.CategoriaUiEvent
+import edu.ucne.jsautoimports.presentation.categoria.CategoriaUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -45,17 +47,21 @@ class CategoriaViewModel @Inject constructor(
                         }
                     }
                     is Resources.Error -> {
-                            _uiState.update {
-                                it.copy(
-                                    errorMessage = result.message ?: "Error desconocido",
-                                    isLoading = false
-                                )
-                            }
+                        _uiState.update {
+                            it.copy(
+                                errorMessage = result.message ?: "Error desconocido",
+                                isLoading = false
+                            )
                         }
                     }
+
+                    is Resources.Error -> TODO()
+                    is Resources.Loading -> TODO()
+                    is Resources.Success -> TODO()
                 }
             }
         }
+    }
 
     fun onUiEvent(event: CategoriaUiEvent){
         when (event){
