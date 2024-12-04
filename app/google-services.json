@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "332661127495",
+    "project_id": "jsautoparts-a90bd",
+    "storage_bucket": "jsautoparts-a90bd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332661127495:android:88cf09ad40911572c5f462",
+        "android_client_info": {
+          "package_name": "edu.ucne.jsautoimports"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGqoUWg_k9BF-G8VgvolbhhMgBdMffhE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332661127495:android:5ba4f94b6b0c25f1c5f462",
+        "android_client_info": {
+          "package_name": "edu.ucne.jsautopartsprueba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGqoUWg_k9BF-G8VgvolbhhMgBdMffhE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
