@@ -20,7 +20,8 @@ Esta es una aplicacion de ventas de vehiculos en la cual tenemos varias categori
 
 
 #Imagenes
-https://ucneedu-my.sharepoint.com/:i:/g/personal/jose_polanco13_ucne_edu_do/EU4mFAkEzohBiJ59E4WWJrABPJAn4-vgunlbRa98KX75iA?e=nLhO9d
+
+![lista](https://github.com/user-attachments/assets/f543ffc1-c3cd-4a58-97c3-bdff6ba8622e)
 
 
 
