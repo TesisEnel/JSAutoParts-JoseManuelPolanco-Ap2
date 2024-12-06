@@ -23,7 +23,6 @@ import coil.compose.AsyncImage
 
 @Composable
 fun ShoppingCartScreen() {
-    // Estado para almacenar el total dinámico del carrito
     var totalAmount by remember { mutableStateOf(0f) }
 
     Column(
@@ -31,25 +30,22 @@ fun ShoppingCartScreen() {
             .fillMaxSize()
             .background(Color(0xFF1A73E8))
     ) {
-        // Cabecera
         TopAppBar(
             backgroundColor = Color.Transparent,
             elevation = 0.dp,
-            contentPadding = PaddingValues(start = 0.dp, end = 0.dp) // Eliminar padding predeterminado
+            contentPadding = PaddingValues(start = 0.dp, end = 0.dp)
         ) {
-            // Ícono de navegación (opcional)
             IconButton(
                 onClick = { /* Acción de retroceso */ },
-                modifier = Modifier.align(Alignment.CenterVertically) // Asegura alineación vertical
+                modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
             }
 
-            // Contenedor para centrar el título
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(), // Hacer que el contenedor ocupe todo el ancho
-                contentAlignment = Alignment.Center // Centrar contenido
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Carrito de compras",
@@ -61,7 +57,6 @@ fun ShoppingCartScreen() {
         }
 
 
-        // Barra de progreso de los pasos
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -73,7 +68,6 @@ fun ShoppingCartScreen() {
             StepIndicator(step = "3", label = "Checkout", isActive = false)
         }
 
-        // Contenido del carrito usando LazyColumn para permitir el scroll
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -121,7 +115,7 @@ fun ShoppingCartScreen() {
 
             item {
                 Card(
-                    shape = RoundedCornerShape(16.dp), // Borde ligeramente redondeado para el Card
+                    shape = RoundedCornerShape(16.dp),
                     elevation = 4.dp,
                     backgroundColor = Color.White,
                     modifier = Modifier
@@ -131,10 +125,9 @@ fun ShoppingCartScreen() {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp), // Ajustar espaciado interno
+                            .padding(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Mostrar el total
                         Text(
                             text = "Total (incl. tax): DOP ${"%,.2f".format(totalAmount)}",
                             style = MaterialTheme.typography.body1,
@@ -144,17 +137,18 @@ fun ShoppingCartScreen() {
 
                         Spacer(modifier = Modifier.height(16.dp))
 
-                        // Botón alargado con bordes ovalados
                         Button(
                             onClick = { /* Acción de continuar */ },
-                            shape = RoundedCornerShape(50), // Bordes completamente ovalados
+                            shape = RoundedCornerShape(50),
                             modifier = Modifier
-                                .fillMaxWidth() // Botón que ocupa todo el ancho del Card
-                                .height(56.dp), // Altura del botón para que sea más visible
+                                .fillMaxWidth()
+                                .height(56.dp),
                             colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color(0xFF1A73E8), // Color azul del botón
-                                contentColor = Color.White // Color blanco para el texto
+                                backgroundColor = Color(0xFF1A73E8),
+                                contentColor = Color.White
                             )
+
+
                         ) {
                             Text("Continue", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                         }
@@ -190,14 +184,12 @@ fun ShoppingCartItem(
     shipping: String? = null,
     deliveryRange: String? = null,
     imageUrl: String? = null,
-    onSubtotalChange: (Float) -> Unit // Callback para actualizar el subtotal en el total general
+    onSubtotalChange: (Float) -> Unit
 ) {
-    // Estado para manejar la cantidad y el subtotal
     var quantity by remember { mutableStateOf(1) }
     val pricePerItem = productPrice.replace("PKR ", "").replace(",", "").toFloatOrNull() ?: 0f
     var subtotal by remember { mutableStateOf(pricePerItem * quantity) }
 
-    // Actualizamos el subtotal total cuando cambia el subtotal de este artículo
     LaunchedEffect(quantity) {
         onSubtotalChange(subtotal)
         subtotal = pricePerItem * quantity
@@ -206,7 +198,7 @@ fun ShoppingCartItem(
     Card(
         shape = RoundedCornerShape(8.dp),
         elevation = 4.dp,
-        backgroundColor = Color(0xFFF5F5F5), // Fondo gris claro para los productos
+        backgroundColor = Color(0xFFF5F5F5),
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
@@ -217,7 +209,6 @@ fun ShoppingCartItem(
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                // Cargar imagen del producto desde URL con Coil
                 AsyncImage(
                     model = imageUrl,
                     contentDescription = "Product Image",
@@ -228,7 +219,6 @@ fun ShoppingCartItem(
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                // Información del producto
                 Column(modifier = Modifier.weight(1f)) {
                     Text(productName, style = MaterialTheme.typography.body1)
                     Row {
@@ -243,7 +233,7 @@ fun ShoppingCartItem(
                             Spacer(modifier = Modifier.width(4.dp))
                         }
                         Text(
-                            "DOP ${"%,.2f".format(subtotal)}", // Subtotal dinámico
+                            "DOP ${"%,.2f".format(subtotal)}",
                             style = MaterialTheme.typography.body1,
                             color = Color(0xFF1A73E8)
                         )
@@ -253,23 +243,21 @@ fun ShoppingCartItem(
                     }
                 }
 
-                // Controles de cantidad
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        onClick = { if (quantity > 1) quantity-- } // Disminuir cantidad
+                    IconButton( // Disminuir cantidad
+                                onClick = { if (quantity > 1) quantity-- }
                     ) {
                         Icon(Icons.Default.Delete, contentDescription = "Decrease quantity")
                     }
                     Text(quantity.toString(), modifier = Modifier.padding(horizontal = 8.dp), style = MaterialTheme.typography.body1)
                     IconButton(
-                        onClick = { quantity++ } // Aumentar cantidad
+                        onClick = { quantity++ }
                     ) {
                         Icon(Icons.Default.Add, contentDescription = "Increase quantity")
                     }
                 }
             }
 
-            // Información adicional
             Text("Subtotal: DOP ${"%,.2f".format(subtotal)}", style = MaterialTheme.typography.body2)
             shipping?.let {
                 Text("Shipping: $shipping", style = MaterialTheme.typography.body2)

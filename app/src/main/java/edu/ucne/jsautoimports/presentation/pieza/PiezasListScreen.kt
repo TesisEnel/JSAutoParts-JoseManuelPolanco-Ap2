@@ -76,13 +76,11 @@ fun PiezasListScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    // Estado para el texto de búsqueda
     var searchQuery by remember { mutableStateOf("") }
 
-    // Filtrar las piezas que pertenecen a la categoría seleccionada y coinciden con la búsqueda
     val piezasFiltradas = uiState.piezas.filter { pieza ->
         pieza.categoriaId.toString() == categoriaId &&
-                pieza.nombre.contains(searchQuery, ignoreCase = true) // Filtrar por nombre
+                pieza.nombre.contains(searchQuery, ignoreCase = true)
     }
 
     val nombreCategoria: String =
@@ -104,12 +102,10 @@ fun PiezasListScreen(
                 .padding(innerPadding)
                 .background(Color.White)
         ) {
-            // Barra de búsqueda
             SearchBar(searchQuery) { newText -> searchQuery = newText }
             Spacer(modifier = Modifier.height(16.dp))
 
             if (piezasFiltradas.isEmpty()) {
-                // Mostrar mensaje si no hay piezas en esta categoría
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -168,10 +164,10 @@ fun PiezasListScreen(
 fun ItemPieza(
     item: PiezaEntity,
     goToPieza: (PiezaEntity) -> Unit,
-    onAddToCart: (Int) -> Unit, // Cantidad incluida
+    onAddToCart: (Int) -> Unit,
     navController: NavController,
 ) {
-    var cantidad by remember { mutableStateOf(1) } // Estado para la cantidad seleccionada
+    var cantidad by remember { mutableStateOf(1) }
 
     Card(
         modifier = Modifier
@@ -180,7 +176,7 @@ fun ItemPieza(
             .clickable { goToPieza(item) },
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)) // Color de fondo de las tarjetas
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
     ) {
         Column(
             modifier = Modifier
@@ -191,7 +187,6 @@ fun ItemPieza(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Usar Coil para cargar la imagen desde una URL
                 val painter = rememberAsyncImagePainter(
                     model = item.imagen, // La URL de la imagen
                 )
@@ -201,17 +196,15 @@ fun ItemPieza(
                     contentDescription = "Imagen de la pieza",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(80.dp) // Tamaño de la imagen
-                        .clip(RoundedCornerShape(8.dp)) // Bordes redondeados
+                        .size(80.dp)
+                        .clip(RoundedCornerShape(8.dp))
                 )
 
-                Spacer(modifier = Modifier.width(16.dp)) // Espacio entre la imagen y los textos
+                Spacer(modifier = Modifier.width(16.dp))
 
-                // Detalles de la pieza y cantidad
                 Column(
-                    modifier = Modifier.weight(1f) // Ocupa el espacio restante
+                    modifier = Modifier.weight(1f)
                 ) {
-                    // Nombre de la pieza
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -230,7 +223,6 @@ fun ItemPieza(
 
                             Spacer(modifier = Modifier.height(4.dp))
 
-                            // Precio de la pieza
                             Text(
                                 text = "DOP ${item.precio}",
                                 style = MaterialTheme.typography.titleLarge.copy(
@@ -241,7 +233,6 @@ fun ItemPieza(
 
                             Spacer(modifier = Modifier.height(4.dp))
 
-                            // Descripción de la pieza
                             Text(
                                 text = item.descripcion,
                                 style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
@@ -252,7 +243,6 @@ fun ItemPieza(
 
                         Spacer(modifier = Modifier.width(16.dp))
 
-                        // Controles de cantidad
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -290,19 +280,18 @@ fun ItemPieza(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp)) // Espacio entre las secciones
+            Spacer(modifier = Modifier.height(8.dp))
 
-            // Botones "Agregar al Carrito" y "Comprar Ahora"
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp) // Espaciado entre los botones
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
-                    onClick = { onAddToCart(cantidad) }, // Pasa la cantidad seleccionada
+                    onClick = { onAddToCart(cantidad) },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1A73E8)),
                     modifier = Modifier
-                        .weight(1f) // Ambos botones ocupan el mismo ancho
-                        .height(35.dp) // Altura compacta
+                        .weight(1f)
+                        .height(35.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -319,13 +308,12 @@ fun ItemPieza(
 
                 Button(
                     onClick = {
-                        // Navegar a la pantalla de carrito de compras
-                        navController.navigate(Screen.PagoScreen) // Asegúrate de que "carritoDeCompras" es la ruta correcta
+                        navController.navigate(Screen.PagoScreen)
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)), // Color distintivo
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63)),
                     modifier = Modifier
-                        .weight(1f) // Ambos botones ocupan el mismo ancho
-                        .height(35.dp) // Altura compacta
+                        .weight(1f)
+                        .height(35.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.ShoppingCart,

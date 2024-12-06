@@ -147,41 +147,39 @@ fun CategoriaItem( item: CategoriaEntity, modifier: Modifier = Modifier, navCont
         modifier = modifier
             .fillMaxWidth()
             .clickable { navController.navigate(Screen.PiezasList(item.categoriaId.toString())) }
-            .padding(horizontal = 8.dp, vertical = 4.dp), // Espaciado entre las tarjetas
+            .padding(horizontal = 8.dp, vertical = 4.dp),
         elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(12.dp), // Bordes redondeados más atractivos
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)) // Fondo claro para el card
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5))
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp) // Altura del Card
+                .height(200.dp)
         ) {
-            // Imagen de la categoría que ocupa todo el Card
             AsyncImage(
                 model = item.imagen,
                 contentDescription = "Imagen de la categoría",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxSize() // La imagen ocupa todo el espacio disponible
-                    .clip(RoundedCornerShape(12.dp)) // Bordes redondeados para la imagen
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(12.dp))
             )
 
-            // Fondo oscuro semitransparente para el nombre
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.5f)) // Fondo semitransparente
-                    .align(Alignment.BottomStart) // Posiciona el fondo en la parte inferior
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .align(Alignment.BottomStart)
                     .padding(8.dp)
             ) {
-                // Nombre de la categoría
                 Text(
                     text = item.nombre,
-                    style = MaterialTheme.typography.titleMedium, // Tipografía estándar
-                    color = Color.White, // Texto blanco para contrastar
-                    maxLines = 1, // Solo una línea
-                    overflow = TextOverflow.Ellipsis // Mostrar "..." si es muy largo
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

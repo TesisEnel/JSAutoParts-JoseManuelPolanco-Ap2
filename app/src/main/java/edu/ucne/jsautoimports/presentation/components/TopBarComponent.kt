@@ -52,16 +52,14 @@ fun TopBarComponent(
                 contentAlignment = Alignment.Center
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Logo a la izquierda
                     Icon(
-                        painter = painterResource(id = R.drawable.logo_removebg_preview), // Usa tu logo aquí
+                        painter = painterResource(id = R.drawable.logo_removebg_preview),
                         contentDescription = "Logo",
                         modifier = Modifier
                             .size(60.dp)
-                            .padding(end = 14.dp), // Espacio entre el ícono y el texto
-                        tint = Color.Unspecified // No tintar el logo
+                            .padding(end = 14.dp),
+                        tint = Color.Unspecified
                     )
-                    // Título centrado
                     Text(
                         text = title,
                         color = Color.White,
@@ -72,11 +70,10 @@ fun TopBarComponent(
             }
         },
         colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-            containerColor = Color(0xFF1A73E8) // Color de fondo de la barra
+            containerColor = Color(0xFF1A73E8)
         ),
         navigationIcon = {
             IconButton(onClick = {
-                // Navegar hacia atrás en la pila de navegación
                 navController.popBackStack()
             }) {
                 Icon(
@@ -89,8 +86,7 @@ fun TopBarComponent(
 
         actions = {
             IconButton(onClick = {
-                // Aquí navegamos a la pantalla del carrito de compras
-                navController.navigate(Screen.CarritoScreen) // Suponiendo que "carritoCompraScreen" es la ruta configurada en tu NavHost
+                navController.navigate(Screen.CarritoScreen)
             }) {
                 BadgedBox(
                     badge = {
@@ -102,8 +98,8 @@ fun TopBarComponent(
                     }
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.ShoppingCart, // Ícono de carrito de compras
-                        contentDescription = "Carrito de Compra", // Descripción para accesibilidad
+                        imageVector = Icons.Filled.ShoppingCart,
+                        contentDescription = "Carrito de Compra",
                         tint = Color.Black
                     )
                 }

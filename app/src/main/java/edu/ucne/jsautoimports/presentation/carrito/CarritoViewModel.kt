@@ -69,8 +69,8 @@ class  CarritoViewModel @Inject constructor(
 
     fun onUiEvent(event: CarritoUiEvent) {
         when (event) {
-            CarritoUiEvent.Save -> saveCar() // Guarda el carrito
-            CarritoUiEvent.Delete -> deleteCar() // Elimina un carrito
+            CarritoUiEvent.Save -> saveCar()
+            CarritoUiEvent.Delete -> deleteCar()
 
             is CarritoUiEvent.IsRefreshingChanged -> {
                 _uiState.update { currentState ->
@@ -81,7 +81,6 @@ class  CarritoViewModel @Inject constructor(
             is CarritoUiEvent.AddToCart -> addToCart(event.detalle)
 
             CarritoUiEvent.Refresh -> {
-                // Actualizar lista de carritos
                 getCarritos()
             }
         }

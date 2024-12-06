@@ -167,7 +167,6 @@ class PiezaViewModel @Inject constructor(
                         _uiState.update { it.copy(imagenError = "Debe seleccionar una imagen") }
                     }
 
-                    //Si no hay errores, se guarda el producto
                     if(_uiState.value.nombreError!!.isEmpty() &&  _uiState.value.imagenError.isNullOrEmpty()){
                         if (_uiState.value.piezaId == null)
                             piezaRepository.addPieza(_uiState.value.toEntity())

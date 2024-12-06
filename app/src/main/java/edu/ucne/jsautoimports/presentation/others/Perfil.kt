@@ -63,25 +63,23 @@ fun ProfileScreen(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    // Imagen de perfil recortada dentro del círculo
                     Box(
                         modifier = Modifier
                             .size(72.dp)
-                            .background(Color.White, shape = CircleShape) // Fondo blanco del marco
-                            .padding(4.dp) // Espacio entre el marco y la imagen
+                            .background(Color.White, shape = CircleShape)
+                            .padding(4.dp)
                     ) {
                         AsyncImage(
-                            model = "https://randomuser.me/api/portraits/men/1.jpg", // URL de ejemplo
+                            model = "https://randomuser.me/api/portraits/men/1.jpg",
                             contentDescription = "Foto de perfil",
                             modifier = Modifier
-                                .fillMaxSize() // Asegura que ocupe todo el espacio del contenedor
-                                .clip(CircleShape) // Recorta la imagen en un círculo
+                                .fillMaxSize()
+                                .clip(CircleShape)
                         )
                     }
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    // Nombre y subtítulo
                     Column {
                         Text(
                             text = "Samuel Duran",
@@ -130,7 +128,6 @@ fun ProfileScreen(navController: NavController) {
                 }
             }
 
-            // Mostrar carrito si está expandido
             if (isPersonalExpanded) {
                 LazyColumn(
                     modifier = Modifier
@@ -181,7 +178,6 @@ fun ShoppingCartItem(
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Imagen del producto
             AsyncImage(
                 model = imageUrl,
                 contentDescription = "Imagen del producto",
@@ -190,7 +186,6 @@ fun ShoppingCartItem(
                     .background(Color.LightGray, shape = CircleShape)
             )
             Spacer(modifier = Modifier.width(16.dp))
-            // Información del producto
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = productName,

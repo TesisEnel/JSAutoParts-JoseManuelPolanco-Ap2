@@ -60,7 +60,7 @@ fun CartScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
-    val selectedTab = "Carrito" // Establecer "Carrito" como la pestaña seleccionada por defecto
+    val selectedTab = "Carrito"
 
     CartBodyScreen(
         uiState = uiState,
@@ -78,7 +78,7 @@ fun CartScreen(
 private fun CartBodyScreen(
     uiState: CarritoUiState,
     navController: NavController,
-    selectedTab: String,  // Recibir el estado de la pestaña seleccionada
+    selectedTab: String,
     onCartEvent: (CarritoUiEvent) -> Unit
 ) {
     Scaffold(
@@ -104,10 +104,10 @@ private fun CartBodyScreen(
                 .padding(paddingValues),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            // Lista de productos
+
             CartProductList(uiState)
 
-            // Resumen del carrito
+
             CartSummary(
                 uiState = uiState,
                 onProceedToCheckout = {
@@ -123,7 +123,6 @@ private fun CartBodyScreen(
 fun CartProductList(uiState: CarritoUiState) {
     Column(modifier = Modifier.padding(10.dp)) {
         if (uiState.carritoDetalle.isEmpty()) {
-            // Carrito vacío
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -143,7 +142,6 @@ fun CartProductList(uiState: CarritoUiState) {
                 )
             }
         } else {
-            // Lista de productos
             LazyColumn {
                 items(uiState.carritoDetalle) { item ->
                     CartRow(

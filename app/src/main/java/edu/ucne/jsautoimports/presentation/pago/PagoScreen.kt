@@ -60,9 +60,9 @@ fun PagoScreen(
         topBar = {
             TopBarComponent(
                 title = "Registrar Pago",
-                navController = navController, // Pasamos el NavController
+                navController = navController,
 
-                notificationCount = notificationCount // Contador de notificaciones
+                notificationCount = notificationCount
             )
         },
         content = { paddingValues ->
@@ -86,7 +86,6 @@ fun PagoScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Campo para Nombre de la Tarjeta
                     OutlinedTextField(
                         value = nombreTarjeta,
                         onValueChange = { nombreTarjeta = it },
@@ -97,7 +96,6 @@ fun PagoScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Campo para Número de Tarjeta
                     OutlinedTextField(
                         value = numeroTarjeta,
                         onValueChange = { numeroTarjeta = it },
@@ -108,7 +106,6 @@ fun PagoScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Campos para Mes y Año de Expiración
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -132,7 +129,6 @@ fun PagoScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Campo para CVC
                     OutlinedTextField(
                         value = cvc,
                         onValueChange = { cvc = it },
@@ -143,7 +139,6 @@ fun PagoScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Campo para Monto (solo lectura)
                     OutlinedTextField(
                         value = monto.toString(),
                         onValueChange = {},
@@ -155,7 +150,6 @@ fun PagoScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Botón para Guardar
                     Button(
                         onClick = {
                             if (fechaPago.isNotEmpty() && nombreTarjeta.isNotEmpty() &&
